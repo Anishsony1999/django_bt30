@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('index',views.indexPage), # student/index
     
+    path('about/',views.about),    # student/about
 ]
 
 # student/index
