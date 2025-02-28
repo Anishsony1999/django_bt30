@@ -26,6 +26,8 @@ urlpatterns = [
     path('projects',views.projects,name="projects"),
 
     path('products',views.show_products,name='products'),
+
+    path('findbyid/<int:id>',views.findbyid,name='findbyid'),
 ]
 
 # student/index

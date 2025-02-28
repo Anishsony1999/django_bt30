@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    
+    {% if student is None %}
+        <p class="text-danger"> No Student Fount </p>
+    {% else %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h4>{{student.id}}</h4>
+            <h5 class="card-title text-dark">{{student.name}}</h5>
+            <p class="card-text text-info">{{student.add}}</p>
+            <strong class="d-block mb-3">{{student.class}}</strong>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
+    

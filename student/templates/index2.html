@@ -2,9 +2,23 @@
 
     {% block content %}
 
-        <div class="bg-dark"> 
-            this is index2
+    <div class="container">
+        <div class="row"> 
+        {% for student in students %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h4>{{student.id}}</h4>
+                    <h5 class="card-title text-dark">{{student.name}}</h5>
+                    <p class="card-text text-info">{{student.add}}</p>
+                    <strong class="d-block mb-3">{{student.class}}</strong>
+                    <a href="/student/findbyid/{{student.id}}" class="btn btn-primary p-1">more deatils</a>
+                    <a href="{% url 'students:findbyid' id=student.id %}" class="btn btn-primary p-1">more deatils</a>
+                    </div>
+                </div>
+        {% endfor %}
         </div>
+    </div>
+            
 
         <a href="{% url 'students:home' %}" style="color:#333"> Contact</a>
    
