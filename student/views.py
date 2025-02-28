@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
+from .form import ContactForm
+
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
     {"id": 2, "name": "Jane Smith", "class": "9B", "add": "5678 Oak St"},
@@ -48,6 +50,20 @@ def find(request,num):
         return render(request,"index.html",{'name':user_name})
 
 def show_contact(request):
+    if request.method == 'POST':
+
+        form = ContactForm(request.POST)
+    
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        add = request.POST.get('add')
+        
+        if form.is_valid():
+            response = HttpResponse(name)
+            return response
+        
+        return render(request,'contact.html',{'name':name,'email':email,'add':add})
+    
     return render(request,'contact.html')
 
 def index2(request):
