@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
-from .form import ContactForm
+from .form import ContactForm,RegisterForm
 
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
@@ -88,3 +88,17 @@ def findbyid(req,id):
             student_detail = student
 
     return render(req,'studentbyid.html',{'student':student_detail})
+
+def register(req):
+    if req.method == 'POST':
+        form = RegisterForm(req.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            
+            return redirect("students:index")
+    else:
+        form = RegisterForm()
+    return render(req,"register.html",{'form':form})

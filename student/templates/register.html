@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display: block;
+            margin-bottom: 30px;
+        }
+        span{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: center;align-items: center;width: 100vw;height: 100vh;flex-direction: column;">
+        
+        
+        {% comment %} {% for field in form %}
+            {% if field.errors %}
+                <div>
+                    working
+                </div>
+            {% endif %}
+        {% endfor %} {% endcomment %}
+            
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Enter Your Name" value="{{ form.username.value | default:'' }}">
+
+            {% if form.email.errors %}
+                <span>Email is Required</span>
+            {% endif %}
+            <input type="email" name="email" placeholder="Enter Your Email" value="{{ form.email.value | default:'' }}">
+            
+            <input type="password" name="password" placeholder="Enter Your Password">
+            <input type="password" name="password_confirm" placeholder="Enter Your Pass(Confirm)">
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>

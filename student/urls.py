@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('wel/<str:name>',views.greeting), # student/wel/Anihs 
 
-    path('index',views.indexPage), # student/index
+    path('index',views.indexPage,name='index'), # student/index
     
     path('student_about/',views.about,name='about'),    # student/student_about
 
@@ -28,6 +28,8 @@ urlpatterns = [
     path('products',views.show_products,name='products'),
 
     path('findbyid/<int:id>',views.findbyid,name='findbyid'),
+
+    path('register',views.register,name='register'),
 ]
 
 # student/index
