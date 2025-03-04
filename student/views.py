@@ -26,6 +26,7 @@ students = [
     {"id": 20, "name": "Harper King", "class": "11C", "add": "7148 Maplewood St"},
 ]
 
+
 def index(request):
     return HttpResponse("Welcome Students")
 
@@ -59,7 +60,7 @@ def show_contact(request):
         add = request.POST.get('add')
         
         if form.is_valid():
-            response = HttpResponse(name)
+            response = HttpResponse("Form Submited ")
             return response
         
         return render(request,'contact.html',{'name':name,'email':email,'add':add})
