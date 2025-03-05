@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
-from .form import ContactForm,RegisterForm
+from .form import ContactForm,RegisterForm,StudentForm
 
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
@@ -102,3 +102,18 @@ def register(req):
     else:
         form = RegisterForm()
     return render(req,"register.html",{'form':form})
+
+def student_reg(req):
+
+    form = StudentForm()
+
+    if req.method == 'POST' :
+        form = StudentForm(req.POST)
+
+        if form.is_valid():
+
+            form.save()
+        
+            return redirect("studets:index")
+
+    return render(req,'studentReg.html',{'form':form})

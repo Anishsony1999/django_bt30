@@ -30,6 +30,8 @@ urlpatterns = [
     path('findbyid/<int:id>',views.findbyid,name='findbyid'),
 
     path('register',views.register,name='register'),
+
+    path('sregister/',views.student_reg,name='student_reg'),
 ]
 
 # student/index
