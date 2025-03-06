@@ -117,3 +117,30 @@ def student_reg(req):
             return redirect("studets:index")
 
     return render(req,'studentReg.html',{'form':form})
+
+from django.core.mail import send_mail
+def send_my_email(req):
+
+    to = ['sumayya7202@gmail.com','anishsony1999@gmail.com','unniyabes12@gmail.com','sarathrahi077@gmail.com']
+    subject = "Testing mail"
+    text = "This message maybe show a test message from python django class"
+    html = "<p style='color:red'> this is a <strong>test</strong> email </p>"
+
+    send_mail(
+        from_email="thamannasajeevan@gmail.com",
+        message=text,
+        subject= subject,
+        recipient_list=to,
+        html_message=html
+        )
+    return HttpResponse("Mail Send")
+
+
+import os
+from django.core.mail import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from django.http import HttpResponse
+
+

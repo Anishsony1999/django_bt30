@@ -35,4 +35,4 @@ class StudentForm(forms.ModelForm):
 
         model = Student
         fields = ['name','age','add','clas']
-    
+        

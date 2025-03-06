@@ -32,6 +32,10 @@ urlpatterns = [
     path('register',views.register,name='register'),
 
     path('sregister/',views.student_reg,name='student_reg'),
+
+    path('sendmail/',views.send_my_email,name="send_mail"),
+
+    path('sendimage',views.send_email_with_image_html),
 ]
 
 # student/index
