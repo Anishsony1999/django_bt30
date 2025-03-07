@@ -3,6 +3,12 @@ from django.http import HttpResponse
 
 from .form import ContactForm,RegisterForm,StudentForm
 
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from email.mime.image import MIMEImage
+
+
+
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
     {"id": 2, "name": "Jane Smith", "class": "9B", "add": "5678 Oak St"},
@@ -39,8 +45,12 @@ def indexPage(request):
     title = 'Index'
     return render(request,"index.html",{"title":title,'name':page_name})
 
+
+from .models import AboutModel
 def about(request):
-    return render(request,'about.html')
+    text = AboutModel.objects.first().text
+
+    return render(request,'about.html',{'text':text})
 
 def find(request,num):
     if 0 < num < 4 :
@@ -111,10 +121,11 @@ def student_reg(req):
         form = StudentForm(req.POST)
 
         if form.is_valid():
-
-            form.save()
-        
-            return redirect("studets:index")
+            student = form.save(commit=False)
+            send_email_with_image(req,student)
+            student.save()
+    
+            return redirect("students:index")
 
     return render(req,'studentReg.html',{'form':form})
 
@@ -135,12 +146,32 @@ def send_my_email(req):
         )
     return HttpResponse("Mail Send")
 
+def send_email_with_image(req,student):
+    subject = 'Test Email with  Image'
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [student.email]
 
-import os
-from django.core.mail import EmailMessage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from django.http import HttpResponse
+    msg = EmailMultiAlternatives(subject, "Message", from_email, recipient_list)
+
+    html_content = f'''
+    <html>
+    <body>
+        <h1>Vanakam D {student.name} </h1>
+        <img src="cid:image1" alt="Image" width="200px"/>
+    </body>
+    </html>
+    '''
+    msg.attach_alternative(html_content, "text/html")
+
+    image_path = './software-testing-course-scopeindia-2.jpg'
+
+    with open(image_path, 'rb') as img:
+        image = MIMEImage(img.read())
+        image.add_header('Content-ID', '<image1>')
+
+        msg.attach(image)
+
+
+    msg.send()
 
 

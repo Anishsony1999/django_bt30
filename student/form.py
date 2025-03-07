@@ -30,9 +30,11 @@ class StudentForm(forms.ModelForm):
     age  = forms.IntegerField()
     add  = forms.CharField(max_length=100,label='add',required=True) 
     clas = forms.CharField(max_length=20,label='class',required=True) 
+    email = forms.EmailField(max_length=100,label="email")
 
     class Meta:
-
         model = Student
-        fields = ['name','age','add','clas']
+        fields = ['name','age','add','email','clas']
         
+    def clean(self):
+        return super().clean()
