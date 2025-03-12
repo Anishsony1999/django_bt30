@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
 from .form import ContactForm,RegisterForm,StudentForm
+from .models import Country,State
+
+from django.http import JsonResponse
 
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
@@ -135,12 +138,14 @@ def send_my_email(req):
         )
     return HttpResponse("Mail Send")
 
+def home2(req):
 
-import os
-from django.core.mail import EmailMessage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from django.http import HttpResponse
+    countrys = Country.objects.all()
 
+    return render(req,'home1.html',{'countrys':countrys})
 
+def states_by_id(req,id):
+
+    states = State.objects.filter(country=id).values('id','state_name')
+
+    return JsonResponse(list(states),safe=False)

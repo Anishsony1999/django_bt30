@@ -35,7 +35,10 @@ urlpatterns = [
 
     path('sendmail/',views.send_my_email,name="send_mail"),
 
-    path('sendimage',views.send_email_with_image_html),
+    path('home2/',views.home2,name='home2'),
+
+    path('country/<int:id>',views.states_by_id,name='states'),
+
 ]
 
 # student/index
