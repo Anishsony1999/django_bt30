@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
 from .form import ContactForm,RegisterForm,StudentForm
-from .models import Country,State
+from .models import Country,State,Student
+
+from django.utils.text import slugify
 
 from django.http import JsonResponse
 
@@ -31,6 +33,10 @@ students = [
 
 
 def index(request):
+    
+    students = Student.objects.get(name='anish')
+    
+    print(students.clas)
     return HttpResponse("Welcome Students")
 
 def greeting(request,name):
@@ -71,6 +77,8 @@ def show_contact(request):
     return render(request,'contact.html')
 
 def index2(request):
+
+    students = Student.objects.all()
     return render(request,"index2.html",{"students":students})
 
 def home(req):
@@ -84,11 +92,10 @@ def show_products(req):
 
     return render(req,"products.html",{"products":students})
 
-def findbyid(req,id):
-    student_detail = None
-    for student in students :
-        if student.get('id') == id :
-            student_detail = student
+def findbyid(req,slug):
+    student = Student.objects.get(slug=slug)
+    
+    student_detail = student
 
     return render(req,'studentbyid.html',{'student':student_detail})
 
@@ -113,12 +120,19 @@ def student_reg(req):
     if req.method == 'POST' :
         form = StudentForm(req.POST)
 
+        
         if form.is_valid():
 
-            form.save()
+            post = form.save(commit=False)
+           
+            if not post.slug:
+               
+                post.slug = slugify(post.name)
+            post.save()
         
-            return redirect("studets:index")
-
+            return redirect("students:index")
+        else:
+            print(form.errors)
     return render(req,'studentReg.html',{'form':form})
 
 from django.core.mail import send_mail

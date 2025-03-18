@@ -30,9 +30,12 @@ class StudentForm(forms.ModelForm):
     age  = forms.IntegerField()
     add  = forms.CharField(max_length=100,label='add',required=True) 
     clas = forms.CharField(max_length=20,label='class',required=True) 
+    image = forms.ImageField(required=False)
+
 
     class Meta:
 
         model = Student
-        fields = ['name','age','add','clas']
+        fields = ['name','age','add','clas','image','slug']
+        
         
