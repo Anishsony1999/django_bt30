@@ -1,6 +1,9 @@
 from django.urls import path
 from student import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 # 127.0.0.1:8000/student
 
 app_name = 'students'
@@ -39,6 +42,10 @@ urlpatterns = [
 
     path('country/<int:id>',views.states_by_id,name='states'),
 
+    path('login/',views.login,name='student_login'),
+
+    path('logout',views.user_logout,name='logout'),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # student/index

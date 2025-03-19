@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Student
 
 class ContactForm(forms.Form):
@@ -38,4 +39,7 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = ['name','age','add','clas','image','slug']
         
-        
+class LoginForm(AuthenticationForm):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+

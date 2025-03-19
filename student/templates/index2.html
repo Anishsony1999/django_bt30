@@ -11,6 +11,7 @@
                     <h5 class="card-title text-dark">{{student.name}}</h5>
                     <p class="card-text text-info">{{student.add}}</p>
                     <strong class="d-block mb-3">{{student.class}}</strong>
+                    <img src='../media/{{ student.image}}'width='100px' >
                     <a href="/student/findbyid/{{student.slug}}" class="btn btn-primary p-1">more deatils</a>
                     <a href="{% url 'students:findbyid' slug=student.slug %}" class="btn btn-primary p-1">more deatils</a>
                     </div>

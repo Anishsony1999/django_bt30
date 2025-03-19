@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
-from .form import ContactForm,RegisterForm,StudentForm
+from .form import ContactForm,RegisterForm,StudentForm,LoginForm
 from .models import Country,State,Student
 
 from django.utils.text import slugify
 
 from django.http import JsonResponse
+
+from django.contrib.auth import authenticate,logout,login as user_login
 
 students = [
     {"id": 1, "name": "John Doe", "class": "10A", "add": "1234 Elm St"},
@@ -118,8 +120,8 @@ def student_reg(req):
     form = StudentForm()
 
     if req.method == 'POST' :
-        form = StudentForm(req.POST)
-
+        form = StudentForm(req.POST,req.FILES)
+        
         
         if form.is_valid():
 
@@ -163,3 +165,28 @@ def states_by_id(req,id):
     states = State.objects.filter(country=id).values('id','state_name')
 
     return JsonResponse(list(states),safe=False)
+
+def login(request):
+
+    if request.method == 'POST' :
+        form = LoginForm(request,data= request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username=username,password=password)
+
+            if user is not None :
+                user_login(request,user)
+                return redirect('students:index')
+            else:
+                print('form Pass r Name error')
+        else:
+            print('Form Validation Error')
+    return render(request,'login.html')
+
+
+def user_logout(req):
+    logout(req)
+    return redirect('students:index')
