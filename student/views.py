@@ -121,12 +121,12 @@ def student_reg(req):
 
     if req.method == 'POST' :
         form = StudentForm(req.POST,req.FILES)
-        
+
         
         if form.is_valid():
 
             post = form.save(commit=False)
-           
+            
             if not post.slug:
                
                 post.slug = slugify(post.name)

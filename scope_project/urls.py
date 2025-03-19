@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from .views import handling_404,handling_500
 
 urlpatterns = [
     path('student/',include("student.urls")),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = handling_404
+handler500 = handling_500
